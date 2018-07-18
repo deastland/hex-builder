@@ -20,7 +20,7 @@ public class App
         testHex.setTerrainType(TerrainType.FOREST);
         // Add a feature to the Hex.
         Feature feature = new Feature();
-        feature.setName("Ruins");
+        feature.setName("Impact Crater");
         feature.setType(FeatureType.Landmark);
         feature.setVisibility(1);
         
@@ -33,6 +33,13 @@ public class App
         feature2.setVisibility(0);
         
         testHex.getFeatures().add(feature2);
+
+        Feature feature3 = new Feature();
+        feature3.setName("Ruins");
+        feature3.setType(FeatureType.Dungeon);
+        feature3.setVisibility(0);
+        
+        testHex.getFeatures().add(feature3);
         
         // Inspect the Hex.
         System.out.println(testHex);
