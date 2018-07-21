@@ -1,5 +1,7 @@
 package org.dizzle.utilities.actions;
 
+import org.dizzle.utilities.misc.SwampEncounter;
+import org.dizzle.utilities.model.Encounter;
 import org.dizzle.utilities.model.EncounterCreature;
 import org.dizzle.utilities.model.Hex;
 import org.dizzle.utilities.model.Party;
@@ -26,7 +28,7 @@ public class WatchManager {
 	private int day = 1;
 	private int watch = 1;
 
-	public void passWatch(Party party) {
+	public Encounter passWatch(Party party) {
 
 		// IF party is moving then...
 		// Calculate party move speed.
@@ -38,6 +40,7 @@ public class WatchManager {
 		//     no change in hex.
 		
 		Hex hex = party.getCurrentHex();
+		Encounter watchEncounter = null;
 
 		// Calculate party speed
 		int terrainSpeedModifier = hex.getTerrainType().getSpeedModifier();
@@ -48,8 +51,11 @@ public class WatchManager {
 		case SWAMP:
 			System.out.println("Do swamp stuff");
 			
+			SwampEncounter swampEncounter = new SwampEncounter();
 			
+			watchEncounter = swampEncounter.rollEncounter(party);
 			
+			System.out.println("Swamp Encounter: " + watchEncounter);
 			
 			break;
 		case MOOR:
@@ -98,6 +104,7 @@ public class WatchManager {
 		
 		incrementWatch();
 		
+		return watchEncounter;
 	}
 
 	public int getDay() {

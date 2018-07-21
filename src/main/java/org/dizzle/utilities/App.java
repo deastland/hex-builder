@@ -4,7 +4,9 @@ import org.dizzle.utilities.actions.WatchManager;
 import org.dizzle.utilities.model.EncounterLocation;
 import org.dizzle.utilities.model.FeatureType;
 import org.dizzle.utilities.model.Hex;
+import org.dizzle.utilities.model.Party;
 import org.dizzle.utilities.model.TerrainType;
+import org.dizzle.utilities.model.TravelMode;
 
 /**
  * Hello world!
@@ -16,11 +18,13 @@ public class App
     {
         System.out.println( "Hello World!" );
         
-        WatchManager timeManager = new WatchManager();
+        WatchManager watchManager = new WatchManager();
+        
+        ////////////////// CREATE TEST HEX /////////////////////////////////
         
         // Create a basic Hex.
         Hex testHex = new Hex(04, 01);
-        testHex.setTerrainType(TerrainType.FOREST);
+        testHex.setTerrainType(TerrainType.SWAMP);
         // Add a feature to the Hex.
         EncounterLocation feature = new EncounterLocation();
         feature.setName("Impact Crater");
@@ -57,5 +61,17 @@ public class App
         if (testHex.isAdjacentTo(otherHex)) {
         	System.out.println("The hexes are adjacent!");
         }
+        
+        ////////////////////// CREATE TEST PARTY ////////////////////////////////
+        
+        Party party = new Party();
+        party.setBaseSpeed(30);
+        party.setCurrentHex(testHex);
+        party.setName("Hex Hellions");
+        party.setTravelMode(TravelMode.CAREFUL_EXPLORE);
+        
+        System.out.println("About to try to have an encounter...");
+        
+        System.out.println("Encounter is: " + watchManager.passWatch(party));
     }
 }

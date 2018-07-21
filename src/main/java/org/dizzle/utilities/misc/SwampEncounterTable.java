@@ -47,7 +47,8 @@ public class SwampEncounterTable {
 		encounterList.add(zombieEncounter);
 		encounterList.add(zombieEncounter);
 		
-		EncounterCreature[] encTable = (EncounterCreature[])encounterList.toArray();
+		EncounterCreature[] encTable = new EncounterCreature[encounterList.size()];
+		encTable = encounterList.toArray(encTable);
 
 		return encTable;
 	}

@@ -13,10 +13,11 @@ public enum TravelMode {
 
 	CAREFUL(50),
 	STANDARD(100),
-	FAST(150),
+	FAST(200),
 	EXPLORE(50),
 	FORAGING(50),
-	STATIONARY(0);
+	STATIONARY(0),
+	CAREFUL_EXPLORE(25);
 	
 	int speedModifier;
 	
