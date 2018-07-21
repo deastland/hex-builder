@@ -131,13 +131,14 @@ public class Hex {
 	public String toString() {
 		StringBuffer retStr = new StringBuffer("");
 		
-		retStr.append("HexId: " + this.id);
-		retStr.append("Coordinates: " + location.getX() + ":" + location.getY() + "\n");
-		retStr.append("Terrain type: " + terrainType + "\n");
-		retStr.append(("Polite: " + polite));
+		retStr.append("HexId: " + this.id).append("\n");
+		retStr.append("Coordinates: ").append(location.getX()).append(":").append(location.getY()).append("\n");
+		retStr.append("Terrain type: ").append(terrainType).append("\n");
+		retStr.append("Polite: ").append(polite).append("\n");
 		retStr.append("Features: \n");
 		for (EncounterLocation f : features) {
-			retStr.append(" - " + f.getType() + " : " + f.getName() + " <-- Obvious: " + f.isObvious() + "\n");
+			retStr.append(" - ").append(f.getType()).append(" : ").append(f.getName())
+			.append(" <-- Obvious: ").append(f.isObvious()).append("\n");
 		}
 		
 		return retStr.toString();

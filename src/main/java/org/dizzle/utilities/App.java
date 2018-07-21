@@ -2,6 +2,7 @@ package org.dizzle.utilities;
 
 import org.dizzle.utilities.actions.WatchManager;
 import org.dizzle.utilities.model.EncounterLocation;
+import org.dizzle.utilities.model.FeatureLocation;
 import org.dizzle.utilities.model.FeatureType;
 import org.dizzle.utilities.model.Hex;
 import org.dizzle.utilities.model.Party;
@@ -29,6 +30,7 @@ public class App
         EncounterLocation feature = new EncounterLocation();
         feature.setName("Impact Crater");
         feature.setType(FeatureType.Landmark);
+        feature.setFeatureLocation(FeatureLocation.WILDERNESS);
         feature.setVisibility(1);
         
         testHex.getFeatures().add(feature);
@@ -37,6 +39,7 @@ public class App
         EncounterLocation feature2 = new EncounterLocation();
         feature2.setName("Roc Nest");
         feature2.setType(FeatureType.Lair);
+        feature2.setFeatureLocation(FeatureLocation.WILDERNESS);
         feature2.setVisibility(0);
         
         testHex.getFeatures().add(feature2);
@@ -44,6 +47,7 @@ public class App
         EncounterLocation feature3 = new EncounterLocation();
         feature3.setName("Ruins");
         feature3.setType(FeatureType.Dungeon);
+        feature3.setFeatureLocation(FeatureLocation.RIVER);
         feature3.setVisibility(0);
         
         testHex.getFeatures().add(feature3);
@@ -69,6 +73,8 @@ public class App
         party.setCurrentHex(testHex);
         party.setName("Hex Hellions");
         party.setTravelMode(TravelMode.CAREFUL_EXPLORE);
+        
+        /////////////// HAVE THE PARTY EXPEND A WATCH AND CHECK FOR ENCOUNTERS /////////////////
         
         System.out.println("About to try to have an encounter...");
         
