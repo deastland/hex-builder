@@ -11,8 +11,8 @@ public class EncounterLocation extends Encounter {
 
 	private FeatureType type;					// What kind of feature is it? (landmark, dungeon, etc.)
 	private boolean visited = false;			// Has the party been here before?
-	private FeatureLocation featureLocation;	// Is the feature along a road or river, or just out in the wilderness?
-	private int visibility;						// From how many hexes away is the feature visible?
+	private SpecialVenue specialVenue = null;	// Is the feature along a road or river, or just out in the wilderness?
+	private int visibility = 0;					// From how many hexes away is the feature visible?
 
 	// The visibility number is the number of hexes from which a feature is visible.
 	// -1 : Hidden. Difficult to discover.
@@ -50,21 +50,21 @@ public class EncounterLocation extends Encounter {
 		this.visibility = visibility;
 	}
 	
-	public FeatureLocation getFeatureLocation() {
-		return featureLocation;
+	public SpecialVenue getSpecialVenue() {
+		return specialVenue;
 	}
 
-	public void setFeatureLocation(FeatureLocation featureLocation) {
-		this.featureLocation = featureLocation;
+	public void setSpecialVenue(SpecialVenue specialVenue) {
+		this.specialVenue = specialVenue;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuffer retStr = new StringBuffer("");
 		
 		retStr.append("Location Name: " + getName()).append("\n");
 		retStr.append("Location Type: " + getType()).append("\n");
-		retStr.append("Feature Location: " + getFeatureLocation()).append("\n");
+		retStr.append("Feature Venue: " + getSpecialVenue()).append("\n");
 		retStr.append("Feature Visibility: " + getVisibility()).append("\n");
 		retStr.append("Feature Visited: " + isVisited()).append("\n");
 

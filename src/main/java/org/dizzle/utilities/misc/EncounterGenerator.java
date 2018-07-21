@@ -1,17 +1,19 @@
 package org.dizzle.utilities.misc;
 
+import java.util.List;
+
 import org.dizzle.utilities.model.Encounter;
 import org.dizzle.utilities.model.EncounterCreature;
 import org.dizzle.utilities.model.EncounterLocation;
 import org.dizzle.utilities.model.Party;
+import org.dizzle.utilities.model.SpecialVenue;
+import org.dizzle.utilities.model.TerrainType;
 import org.dizzle.utilities.model.TravelMode;
 
-public class SwampEncounter {
+public class EncounterGenerator {
 	
 	private int encounterChance = 16;	// Encounters occur on a 1 on 1d8 (approx 16 percent).
 	private int locationChance = 50;	// Encounter location 50% of the time.
-	
-	
 	private EncounterCreature[] encounterTable = {};
 
 	public Encounter rollEncounter(Party party) {
@@ -26,8 +28,12 @@ public class SwampEncounter {
 			modifier += this.encounterChance;
 		}
 		
-		//TODO: Handle logic for automatically encountering a location if it and the party
-		// are both on HIGHWAY or RIVER location in the hex.
+		// If the party is traveling a special venue (highway, river, etc.) then it automatically encounters 
+		// a location that is on that venue.
+		if (party.getSpecialVenue() != null) {
+			EncounterLocation specialLocation = getEncounterLocation(party.getCurrentHex().getFeatures(), party.getSpecialVenue());
+			return specialLocation;
+		}
 
 		int encounterRoll = DieRoller.rollPercentile();
 		
@@ -69,14 +75,8 @@ public class SwampEncounter {
 			}
 		}
 		
-		// Okay, roll to see what creature encounter we have.
-		encounterTable = SwampEncounterTable.getEncounterTable();
-		
-		// Roll on the table, using the size of the table for the 'die' size.
-		int dieRoll = DieRoller.rollAny(encounterTable.length) - 1;	// The -1 is because the array is 0 based but die always go from 1-n.
-		EncounterCreature thisEncounter = encounterTable[dieRoll];
-		
-		return thisEncounter;
+		// Roll on the appropriate table and return the creature encountered.
+		return rollCreatureEncountered(party.getCurrentHex().getTerrainType());
 	}
 
 	public int getLocationChance() {
@@ -85,6 +85,69 @@ public class SwampEncounter {
 
 	public void setLocationChance(int locationChance) {
 		this.locationChance = locationChance;
+	}
+	
+	// Given a special venue, return the location at that venue. If none exists, return null.
+	private EncounterLocation getEncounterLocation(List<EncounterLocation> locations, SpecialVenue partyTravelVenue) {
+		EncounterLocation returnLocation = null;
+		
+		for (EncounterLocation location : locations) {
+			if (location.getSpecialVenue() == partyTravelVenue) {
+				return location;
+			}
+		}
+		
+		return returnLocation;
+	}
+	
+	private EncounterCreature rollCreatureEncountered(TerrainType terrainType) {
+		EncounterCreature returnEncounter = null;
+
+		switch(terrainType) {
+		case BADLAND:
+			break;
+		case DESERT:
+			break;
+		case DOWNSTREAM:
+			break;
+		case FOREST:
+			break;
+		case GRASSLAND:
+			break;
+		case HILL:
+			break;
+		case JUNGLE:
+			break;
+		case MOOR:
+			break;
+		case MOUNTAIN:
+			break;
+		case SEA:
+			break;
+		case SWAMP:
+			// Okay, roll to see what creature encounter we have.
+			encounterTable = SwampEncounterTable.getEncounterTable();
+			break;
+		case TUNDRA:
+			break;
+		case UPSTREAM:
+			break;
+		case VOLCANIC:
+			break;
+		case WATER:
+			break;
+		default:
+			break;
+		
+		}
+		
+		
+		// Roll on the table, using the size of the table for the 'die' size.
+		int dieRoll = DieRoller.rollAny(encounterTable.length) - 1;	// The -1 is because the array is 0 based but die always go from 1-n.
+		returnEncounter = encounterTable[dieRoll];
+
+
+		return returnEncounter;
 	}
 	
 }

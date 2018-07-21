@@ -1,6 +1,6 @@
 package org.dizzle.utilities.actions;
 
-import org.dizzle.utilities.misc.SwampEncounter;
+import org.dizzle.utilities.misc.EncounterGenerator;
 import org.dizzle.utilities.model.Encounter;
 import org.dizzle.utilities.model.EncounterCreature;
 import org.dizzle.utilities.model.Hex;
@@ -50,13 +50,8 @@ public class WatchManager {
 		switch(hex.getTerrainType()) {
 		case SWAMP:
 			System.out.println("Do swamp stuff");
-			
-			SwampEncounter swampEncounter = new SwampEncounter();
-			
+			EncounterGenerator swampEncounter = new EncounterGenerator();
 			watchEncounter = swampEncounter.rollEncounter(party);
-			
-			System.out.println("Swamp Encounter: " + watchEncounter);
-			
 			break;
 		case MOOR:
 			System.out.println("Do moor stuff");
@@ -88,17 +83,18 @@ public class WatchManager {
 		case WATER:
 			System.out.println("Do water stuff");
 			break;
-		case RIVER_UPSTREAM:
+		case UPSTREAM:
 			System.out.println("Do upstream stuff");
 			break;
-		case RIVER_DOWNSTREAM:
+		case DOWNSTREAM:
 			System.out.println("Do downstream stuff");
 			break;
-		case HIGHWAY:
+		case TUNDRA:
 			System.out.println("Do highway stuff");
 			break;
+		case VOLCANIC:
+			break;
 		default:
-			System.out.println("I have no idea where you are!");
 			break;
 		}
 		
@@ -142,6 +138,15 @@ public class WatchManager {
 	public static void main(String[] args) {
 		WatchManager watchManager = new WatchManager();
 		
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer retStr = new StringBuffer();
+		
+		retStr.append("WATCH -- Day: ").append(this.day).append(". Watch: ").append(watch).append("\n");
+		
+		return retStr.toString();
 	}
 	
 }

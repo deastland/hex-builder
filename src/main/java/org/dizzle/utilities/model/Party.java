@@ -17,15 +17,16 @@ public class Party {
 	
 	//TODO: Determine if currentHex should be an actual Hex object or just a set of coordinates.
 	
-	private Hex currentHex;				// The hex in which the party is currently residing.
-	private TravelMode travelMode;		// The party current party 'stance' (stationary, foraging, fast, etc.)
-	private double hexMilesTraveled;	// The number of travel miles accumulated in the current hex. It takes 12 to exit a hex.
+	private Hex currentHex;						// The hex in which the party is currently residing.
+	private TravelMode travelMode;				// The party current party 'stance' (stationary, foraging, fast, etc.)
+	private SpecialVenue specialVenue = null;	// If the party is on a highway or river or other special travel way.
+	private double hexMilesTraveled;			// The number of travel miles accumulated in the current hex. It takes 12 to exit a hex.
 	
-	private int baseSpeed = 30;			// The base ground speed of the slowest party member.
+	private int baseSpeed = 30;					// The base ground speed of the slowest party member.
 	
-	private int navigatorSkill;			// The survival bonus for the character navigating.
-	private int quartermasterSkill;		// Some skill might be needed for the quartermaster.
-	private int scoutSkill;				// The perception bonus for the character scouting.
+	private int navigatorSkill;					// The survival bonus for the character navigating.
+	private int quartermasterSkill;				// Some skill might be needed for the quartermaster.
+	private int scoutSkill;						// The perception bonus for the character scouting.
 	
 	// Functional Methods
 	
@@ -142,6 +143,14 @@ public class Party {
 		this.hexMilesTraveled = hexMilesTraveled;
 	}
 
+	public SpecialVenue getSpecialVenue() {
+		return specialVenue;
+	}
+
+	public void setSpecialVenue(SpecialVenue specialVenue) {
+		this.specialVenue = specialVenue;
+	}
+
 	///////////////////// MAIN FOR TESTING //////////////////////////////
 	public static void main(String[] args) {
 		
@@ -151,4 +160,5 @@ public class Party {
 		System.out.println("Party base speed: " + party.getBaseSpeed());
 		System.out.println(("Party map speed per watch: " + party.getMilesPerWatch()));
 	}
+
 }

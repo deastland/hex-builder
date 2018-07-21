@@ -5,6 +5,13 @@ import java.util.List;
 
 import org.dizzle.utilities.model.EncounterCreature;
 
+/**
+ * This is a simple static encounter table. 
+ * The intention is to replace it with a persistent encounter table either in file or database form, accessed via DAO.
+ * 
+ * @author Zeus
+ *
+ */
 public class SwampEncounterTable {
 
 	public static EncounterCreature[] getEncounterTable() {

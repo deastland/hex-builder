@@ -14,22 +14,22 @@ package org.dizzle.utilities.model;
  */
 public enum TerrainType {
 
-	// All terrain types assume "trackless" areas of the terrain. If traveling along a road, use HIGHWAY type.
+	// All terrain types assume "trackless" areas of the terrain. If traveling along a road, use HIGHWAY special venue.
 	FOREST(50),
 	GRASSLAND(75),
 	MOUNTAIN(50),
 	HILL(50),
 	SWAMP(50),
-	MOOR(25),				// Includes any terrain type with several feet of water that must be walked through.
+	MOOR(25),				// Includes any terrain type covered in water/mud that must be walked through.
 	WATER(100),				// Assumes water craft or swim speed
 	SEA(100),				// Assumes water craft or swim speed
-	RIVER_UPSTREAM(50),		// Assumes water craft or swim speed
-	RIVER_DOWNSTREAM(150),	// Assumes water craft or swim speed
+	UPSTREAM(50),			// Assumes water craft or swim speed
+	DOWNSTREAM(150),		// Assumes water craft or swim speed
 	BADLAND(75),
 	DESERT(50),
 	JUNGLE(25),
-	VOLCANIC(25),			// Assumes enough safe surface to navigate past lava/steam vents/boiling pools/etc.
-	HIGHWAY(100);
+	TUNDRA(75),
+	VOLCANIC(25);			// Assumes enough safe surface to navigate past lava/steam vents/boiling pools/etc.
 	
 	private int speedModifier;
 	
