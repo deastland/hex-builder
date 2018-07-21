@@ -1,11 +1,14 @@
 package org.dizzle.utilities.actions;
 
+import org.dizzle.utilities.misc.DieRoller;
 import org.dizzle.utilities.misc.EncounterGenerator;
 import org.dizzle.utilities.model.Encounter;
-import org.dizzle.utilities.model.EncounterCreature;
+import org.dizzle.utilities.model.GroundCondition;
 import org.dizzle.utilities.model.Hex;
 import org.dizzle.utilities.model.Party;
 import org.dizzle.utilities.model.Season;
+import org.dizzle.utilities.model.TravelMode;
+import org.dizzle.utilities.model.VisibilityCondition;
 import org.dizzle.utilities.model.WeatherCondition;
 
 /**
@@ -30,16 +33,18 @@ public class TimeManager {
 	private int day = 1;
 	private int watch = 1;
 	private Season season = Season.SPRING;
-	private WeatherCondition weather = WeatherCondition.CLEAR;
+	private WeatherCondition weatherCondition = WeatherCondition.CLEAR;
+	private GroundCondition groundCondition = GroundCondition.CLEAR;
+	private VisibilityCondition visibilityCondition = VisibilityCondition.CLEAR;
+	private int weatherModifier = 0;	// This can increase if the chance for bad weather increases. Goes back to zero when CLEAR/WARM/COOL.
 	
-	//TODO: Seasons? Summer have 4 day watches. Winter have 4 night watches.
-
-	/////////// Fucntional methods //////////////
+	
+	/////////// Functional methods //////////////
 	
 	public Encounter passWatch(Party party) {
 
 		// IF party is moving then...
-		// Calculate party move speed.
+		// 1) Calculate party move speed.
 		// ENCOUNTER CHECK
 		// Add move speed to "distance traveled in hex"
 		//   If hex distance > 12
@@ -75,8 +80,19 @@ public class TimeManager {
 			speedMultiplier = party.getSpecialVenue().getSpeedModifier() * .01;
 		}
 		
+		// Visibility modifier.
+		speedMultiplier *= visibilityCondition.getSpeedModifier() * .01;
+		
+		// Ground condition modifier.
+		speedMultiplier *= groundCondition.getSpeedModifier() * .01;
+		
 		// Weather modifier.
-		speedMultiplier *= weather.getSpeedModifier() * .01;
+		speedMultiplier *= weatherCondition.getSpeedModifier() * .01;
+		
+		// If party isn't moving, no distance can be traveled.
+		if (party.getTravelMode() == TravelMode.STATIONARY) {
+			speedMultiplier = 0;
+		}
 		
 		// Figure out distance added to total hex miles traveled and add it to the party.
 		double addedDistance = party.getMilesPerWatch() * speedMultiplier;
@@ -91,6 +107,60 @@ public class TimeManager {
 		return watch < season.getSunsetWatch();
 	}
 
+	public void incrementWatch() {
+		this.watch++;
+		if (this.watch > 6) {
+			this.day++;
+			this.watch = 1;
+		}
+	}
+	
+	/**
+	 * Calculate the kind of weather currently taking place.
+	 * 
+	 * @param inclimentModifier - Percent increase in the chance of incliment weather.
+	 * @return
+	 */
+	public WeatherCondition getCurrentWeather(int inclimentModifier) {
+		WeatherCondition weatherCondition = null;
+
+		// Base chance of weather turning worse is 10%.
+		double inclimentChance = 10 + inclimentModifier;
+		
+		switch(season) {
+		case FALL:
+			// The base weather condition for this season. 
+			weatherCondition = WeatherCondition.CLEAR;
+			break;
+		case SPRING:
+			// The base weather condition for this season.
+			weatherCondition = WeatherCondition.CLEAR;
+			
+			break;
+		case SUMMER:
+			// The base weather condition for this season.
+			weatherCondition = WeatherCondition.WARM;
+			break;
+		case WINTER:
+			// The base weather condition for this season.
+			weatherCondition = WeatherCondition.COOL;
+			
+			// Weather gets worse if roll below.
+			if (DieRoller.rollPercentile() <= inclimentChance) {
+				
+			}
+			
+			// Calculate chance that any incliment weather is happening.
+			break;
+		default:
+			break;
+		
+		}
+		
+		
+		return weatherCondition;
+	}
+	
 	///////////// GETTERS AND SETTERS /////////////////
 	public int getDay() {
 		return day;
@@ -108,22 +178,14 @@ public class TimeManager {
 		this.watch = watch;
 	}
 	
-	public void incrementWatch() {
-		this.watch++;
-		if (this.watch > 6) {
-			this.day++;
-			this.watch = 1;
-		}
-	}
-	
-	public EncounterCreature checkForEncounter(Party party) {
-		EncounterCreature enc = null;
-		
-		
-		
-		return enc;
+	public Season getSeason() {
+		return season;
 	}
 
+	public void setSeason(Season season) {
+		this.season = season;
+	}
+	
 	public static void main(String[] args) {
 		//TODO: Maybe some testing here?
 		
@@ -138,20 +200,28 @@ public class TimeManager {
 		return retStr.toString();
 	}
 
-	public Season getSeason() {
-		return season;
+	public int getWeatherModifier() {
+		return weatherModifier;
 	}
 
-	public void setSeason(Season season) {
-		this.season = season;
+	public void setWeatherModifier(int weatherModifier) {
+		this.weatherModifier = weatherModifier;
 	}
 
-	public WeatherCondition getWeather() {
-		return weather;
+	public GroundCondition getGroundCondition() {
+		return groundCondition;
 	}
 
-	public void setWeather(WeatherCondition weather) {
-		this.weather = weather;
+	public void setGroundCondition(GroundCondition groundCondition) {
+		this.groundCondition = groundCondition;
 	}
-	
+
+	public VisibilityCondition getVisibilityCondition() {
+		return visibilityCondition;
+	}
+
+	public void setVisibilityCondition(VisibilityCondition visibilityCondition) {
+		this.visibilityCondition = visibilityCondition;
+	}
+
 }

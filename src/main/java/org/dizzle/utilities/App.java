@@ -2,7 +2,7 @@ package org.dizzle.utilities;
 
 import org.dizzle.utilities.actions.TimeManager;
 import org.dizzle.utilities.model.EncounterLocation;
-import org.dizzle.utilities.model.FeatureType;
+import org.dizzle.utilities.model.LocationType;
 import org.dizzle.utilities.model.Hex;
 import org.dizzle.utilities.model.Party;
 import org.dizzle.utilities.model.SpecialVenue;
@@ -17,6 +17,8 @@ public class App
 {
     public static void main( String[] args )
     {
+    	// This is the calendar, the watch tracker, the encounter generator, 
+    	// the weather maker, and the travel tracker for the hex map.
         TimeManager watchManager = new TimeManager();
         
         ////////////////// CREATE TEST HEX /////////////////////////////////
@@ -27,7 +29,7 @@ public class App
         // Add a feature to the Hex.
         EncounterLocation feature = new EncounterLocation();
         feature.setName("Impact Crater");
-        feature.setType(FeatureType.Landmark);
+        feature.setType(LocationType.Landmark);
         feature.setVisibility(1);
         
         testHex.getFeatures().add(feature);
@@ -35,14 +37,14 @@ public class App
         // Add another feature to the hex.
         EncounterLocation feature2 = new EncounterLocation();
         feature2.setName("Roc Nest");
-        feature2.setType(FeatureType.Lair);
+        feature2.setType(LocationType.Lair);
         feature2.setVisibility(0);
         
         testHex.getFeatures().add(feature2);
 
         EncounterLocation feature3 = new EncounterLocation();
         feature3.setName("Ruins");
-        feature3.setType(FeatureType.Dungeon);
+        feature3.setType(LocationType.Dungeon);
         feature3.setSpecialVenue(SpecialVenue.HIGHWAY);
         feature3.setVisibility(0);
         

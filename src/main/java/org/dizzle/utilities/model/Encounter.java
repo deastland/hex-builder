@@ -1,7 +1,7 @@
 package org.dizzle.utilities.model;
 
 /**
- * Parties can encounter creatures or features (locations) in a given hex.
+ * Parties can encounter creatures or locations in a given hex.
  * Features are only ever encountered if a party is moving.
  * 
  * @author Zeus

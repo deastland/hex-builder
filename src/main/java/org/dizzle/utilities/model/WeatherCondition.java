@@ -2,14 +2,14 @@ package org.dizzle.utilities.model;
 
 public enum WeatherCondition {
 	CLEAR(100),
+	WARM(100),
 	HOT(75),
+	COOL(100),
 	COLD(75),
-	HURRICANE(10),
-	OBSCURED(50),		// fog, night, etc.
-	SNOW(50),
-	DEEP_SNOW(50),
 	STORM(75),
-	HEAVY_STORM(50);
+	HEAVY_STORM(50),
+	HURRICANE(10),
+	OBSCURED(50);		// fog, night, etc.
 	
 	private int speedModifier;
 	

@@ -9,7 +9,7 @@ package org.dizzle.utilities.model;
  */
 public class EncounterLocation extends Encounter {
 
-	private FeatureType type;					// What kind of feature is it? (landmark, dungeon, etc.)
+	private LocationType type;					// What kind of feature is it? (landmark, dungeon, etc.)
 	private boolean visited = false;			// Has the party been here before?
 	private SpecialVenue specialVenue = null;	// Is the feature along a road or river, or just out in the wilderness?
 	private int visibility = 0;					// From how many hexes away is the feature visible?
@@ -22,11 +22,11 @@ public class EncounterLocation extends Encounter {
 	// etc..
 	
 	/// Getters and Setters
-	public FeatureType getType() {
+	public LocationType getType() {
 		return type;
 	}
 
-	public void setType(FeatureType type) {
+	public void setType(LocationType type) {
 		this.type = type;
 	}
 

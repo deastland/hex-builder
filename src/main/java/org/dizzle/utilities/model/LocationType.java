@@ -1,6 +1,6 @@
 package org.dizzle.utilities.model;
 
-public enum FeatureType {
+public enum LocationType {
 
 	Dungeon,
 	Landmark,
