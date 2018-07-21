@@ -15,15 +15,16 @@ public enum TravelMode {
 	STANDARD(100),
 	FAST(150),
 	EXPLORE(50),
+	FORAGING(50),
 	STATIONARY(0);
 	
-	int value;
+	int speedModifier;
 	
-	public int getValue() {
-		return this.value;
+	public int getSpeedModifier() {
+		return this.speedModifier;
 	}
 	
-	private TravelMode(int value) {
-		this.value = value;
+	private TravelMode(int speedModifier) {
+		this.speedModifier = speedModifier;
 	}
 }

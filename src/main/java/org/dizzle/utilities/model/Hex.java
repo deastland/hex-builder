@@ -15,11 +15,13 @@ import java.util.List;
  */
 public class Hex {
 
-	private Coordinates location = new Coordinates();			// The Cartesian coordinates of the hex (X,Y).
+	private int id;										// Unique ID of hex. For database storage.
+	private Coordinates location = new Coordinates();	// The Cartesian coordinates of the hex (X,Y).
 	private TerrainType terrainType = null;				// The dominant terrain type in this hex.
 	private boolean polite = false;						// A polite hex is a hex within distance 2 of a civilization hex (town, city, etc.).
 	List<Feature> features = new ArrayList<Feature>();	// A list of things in this hex. Some might be obvious (automatically seen).
 	
+	////// CONSTRUCTORS ////////
 	public Hex() {
 	}
 	
@@ -43,8 +45,19 @@ public class Hex {
 		this.terrainType = type;
 	}
 	
+	// Functional methods
 	public boolean isAdjacentTo(Hex h) {
 		return MapUtils.getRange(this, h) == 1;
+	}
+
+	public boolean hasObviousFeature() {
+		for (Feature f : this.features) {
+			if (f.isObvious()) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	public int getX() {
@@ -71,6 +84,7 @@ public class Hex {
 		this.location.setY(yCoord);;
 	}
 
+	// Getters and setters
 	public TerrainType getTerrainType() {
 		return terrainType;
 	}
@@ -103,22 +117,23 @@ public class Hex {
 		this.polite = polite;
 	}
 
-	public boolean hasObviousFeature() {
-		for (Feature f : this.features) {
-			if (f.isObvious()) {
-				return true;
-			}
-		}
-		
-		return false;
+	public int getId() {
+		return id;
 	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 
 	@Override
 	public String toString() {
 		StringBuffer retStr = new StringBuffer("");
 		
+		retStr.append("HexId: " + this.id);
 		retStr.append("Coordinates: " + location.getX() + ":" + location.getY() + "\n");
 		retStr.append("Terrain type: " + terrainType + "\n");
+		retStr.append(("Polite: " + polite));
 		retStr.append("Features: \n");
 		for (Feature f : features) {
 			retStr.append(" - " + f.getType() + " : " + f.getName() + " <-- Obvious: " + f.isObvious() + "\n");

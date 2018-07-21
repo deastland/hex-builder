@@ -12,13 +12,22 @@ import org.dizzle.utilities.misc.DieRoller;
  */
 public class Party {
 	
+	private int id;
+	private String name;
+	
+	//TODO: Determine if currentHex should be an actual Hex object or just a set of coordinates.
+	
 	private Hex currentHex;				// The hex in which the party is currently residing.
-	private TravelMode travelMode;		// The party current party 'stance' (stationary, slow move, fast move, etc.)
+	private TravelMode travelMode;		// The party current party 'stance' (stationary, foraging, fast, etc.)
+	private double hexMilesTraveled;	// The number of travel miles accumulated in the current hex. It takes 12 to exit a hex.
+	
 	private int baseSpeed = 30;			// The base ground speed of the slowest party member.
 	
 	private int navigatorSkill;			// The survival bonus for the character navigating.
 	private int quartermasterSkill;		// Some skill might be needed for the quartermaster.
 	private int scoutSkill;				// The perception bonus for the character scouting.
+	
+	// Functional Methods
 	
 	public int rollNavigateSkill() {
 		return DieRoller.rollD20() + navigatorSkill;
@@ -40,6 +49,25 @@ public class Party {
 		return rollQuartermasterSkill() >= target;
 	}
 	
+	public void enterNewHex(Hex hex) {
+		this.currentHex = hex;
+		this.hexMilesTraveled = 0;
+	}
+	
+	// Based on the move speed of the party, calculate how many miles per watch it can travel.
+	public double getMilesPerWatch() {
+		
+		return this.baseSpeed * 0.4;
+	}
+	
+	////////// CONSTRUCTORS /////////////////
+	
+	public Party() {};
+	
+	public Party(String name) {
+		this.name = name;
+	}
+
 	////////// GETTERS & SETTERS ///////////////
 	
 	public TravelMode getTravelMode() {
@@ -90,6 +118,37 @@ public class Party {
 		this.baseSpeed = baseSpeed;
 	}
 
+	public int getId() {
+		return id;
+	}
 
-	
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public double getHexMilesTraveled() {
+		return hexMilesTraveled;
+	}
+
+	public void setHexMilesTraveled(double hexMilesTraveled) {
+		this.hexMilesTraveled = hexMilesTraveled;
+	}
+
+	///////////////////// MAIN FOR TESTING //////////////////////////////
+	public static void main(String[] args) {
+		
+		Party party = new Party();
+		party.setBaseSpeed(30);
+		
+		System.out.println("Party base speed: " + party.getBaseSpeed());
+		System.out.println(("Party map speed per watch: " + party.getMilesPerWatch()));
+	}
 }

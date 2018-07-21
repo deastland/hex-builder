@@ -20,7 +20,7 @@ public class TimeManager {
 	// Watch 1: Day - Break Camp
 	// Watch 2: Day - Travel
 	// Watch 3: Day - Travel
-	// Watch 4: Night - Set Camp
+	// Watch 4: Night - Set Camp/Rest
 	// Watch 5: Night - Camp/Rest
 	// Watch 6: Night - Camp/Rest 
 	private int day = 1;
