@@ -1,6 +1,6 @@
 package org.dizzle.utilities.actions;
 
-import org.dizzle.utilities.model.Encounter;
+import org.dizzle.utilities.model.EncounterCreature;
 import org.dizzle.utilities.model.Hex;
 import org.dizzle.utilities.model.Party;
 
@@ -13,7 +13,7 @@ import org.dizzle.utilities.model.Party;
  * @author deastland
  *
  */
-public class TimeManager {
+public class WatchManager {
 	
 	// There are six 4-hour watches in a day. A day starts with sunrise, rather than on a clock.
 	// A typical day.
@@ -28,11 +28,32 @@ public class TimeManager {
 
 	public void passWatch(Party party) {
 
-		Hex hex = party.getCurrentHex();
+		// IF party is moving then...
+		// Calculate party move speed.
+		// ENCOUNTER CHECK
+		// Add move speed to "distance traveled in hex"
+		//   If hex distance > 12
+		//     enter new hex
+		//   else
+		//     no change in hex.
 		
+		Hex hex = party.getCurrentHex();
+
+		// Calculate party speed
+		int terrainSpeedModifier = hex.getTerrainType().getSpeedModifier();
+
+		// Encounter Check. This should, based on the terrain type, roll for encounter chance and then
+		// if there is an encounter, specify the encounter itself.
 		switch(hex.getTerrainType()) {
 		case SWAMP:
 			System.out.println("Do swamp stuff");
+			
+			
+			
+			
+			break;
+		case MOOR:
+			System.out.println("Do moor stuff");
 			break;
 		case FOREST:
 			System.out.println("Do forest stuff");
@@ -60,6 +81,15 @@ public class TimeManager {
 			break;
 		case WATER:
 			System.out.println("Do water stuff");
+			break;
+		case RIVER_UPSTREAM:
+			System.out.println("Do upstream stuff");
+			break;
+		case RIVER_DOWNSTREAM:
+			System.out.println("Do downstream stuff");
+			break;
+		case HIGHWAY:
+			System.out.println("Do highway stuff");
 			break;
 		default:
 			System.out.println("I have no idea where you are!");
@@ -94,8 +124,8 @@ public class TimeManager {
 		}
 	}
 	
-	public Encounter checkForEncounter(Party party) {
-		Encounter enc = null;
+	public EncounterCreature checkForEncounter(Party party) {
+		EncounterCreature enc = null;
 		
 		
 		
@@ -103,7 +133,7 @@ public class TimeManager {
 	}
 
 	public static void main(String[] args) {
-		TimeManager timeManager = new TimeManager();
+		WatchManager watchManager = new WatchManager();
 		
 	}
 	

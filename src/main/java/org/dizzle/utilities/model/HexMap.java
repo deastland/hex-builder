@@ -18,10 +18,21 @@ public class HexMap {
 
 	
 	// Given a set of coordinates, return the hex at that location.
-	public Hex getHex(Coordinates c) {
+	public Hex getHexByCoordinates(Coordinates c) {
 		
 		for (Hex h : hexes) {
 			if (h.getLocation().equals(c)) {
+				return h;
+			}
+		}
+		
+		return null;
+	}
+	
+	// Given an Id for a hex, return that hex.
+	public Hex getHexById(int hexId) {
+		for (Hex h : hexes) {
+			if (h.getId() == hexId) {
 				return h;
 			}
 		}

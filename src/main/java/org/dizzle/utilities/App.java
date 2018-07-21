@@ -1,7 +1,7 @@
 package org.dizzle.utilities;
 
-import org.dizzle.utilities.actions.TimeManager;
-import org.dizzle.utilities.model.Feature;
+import org.dizzle.utilities.actions.WatchManager;
+import org.dizzle.utilities.model.EncounterLocation;
 import org.dizzle.utilities.model.FeatureType;
 import org.dizzle.utilities.model.Hex;
 import org.dizzle.utilities.model.TerrainType;
@@ -16,13 +16,13 @@ public class App
     {
         System.out.println( "Hello World!" );
         
-        TimeManager timeManager = new TimeManager();
+        WatchManager timeManager = new WatchManager();
         
         // Create a basic Hex.
         Hex testHex = new Hex(04, 01);
         testHex.setTerrainType(TerrainType.FOREST);
         // Add a feature to the Hex.
-        Feature feature = new Feature();
+        EncounterLocation feature = new EncounterLocation();
         feature.setName("Impact Crater");
         feature.setType(FeatureType.Landmark);
         feature.setVisibility(1);
@@ -30,14 +30,14 @@ public class App
         testHex.getFeatures().add(feature);
        
         // Add another feature to the hex.
-        Feature feature2 = new Feature();
+        EncounterLocation feature2 = new EncounterLocation();
         feature2.setName("Roc Nest");
         feature2.setType(FeatureType.Lair);
         feature2.setVisibility(0);
         
         testHex.getFeatures().add(feature2);
 
-        Feature feature3 = new Feature();
+        EncounterLocation feature3 = new EncounterLocation();
         feature3.setName("Ruins");
         feature3.setType(FeatureType.Dungeon);
         feature3.setVisibility(0);

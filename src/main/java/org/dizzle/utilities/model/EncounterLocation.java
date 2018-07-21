@@ -7,31 +7,23 @@ package org.dizzle.utilities.model;
  * @author deastland
  *
  */
-public class Feature {
+public class EncounterLocation extends Encounter {
 
-	private String name;
 	private FeatureType type;
 	private boolean visited = false;
+	private FeatureLocation featureLocation;
 	
 	// Optional idea: visibility index. 
 	// The visibility number is the number of hexes from which a feature is visible.
-	// 0 - Not easily visible. Must be discovered.
-	// 1 - Can be seen from nearly anywhere within this hex. (Huge tower, impact crater)
-	// 2 - Can be seen from adjacent hexes (very tall mountain, flying castle.).
+	// -1 : Hidden. Difficult to discover.
+	// 0  : Not visible outside normal vision range. Must be discovered.
+	// 1  : Can be seen from nearly anywhere within this hex. (Huge tower, impact crater)
+	// 2  : Can be seen from adjacent hexes (very tall mountain, flying castle.).
 	// etc..
 	private int visibility;
 	
 	
 	/// Getters and Setters
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public FeatureType getType() {
 		return type;
 	}

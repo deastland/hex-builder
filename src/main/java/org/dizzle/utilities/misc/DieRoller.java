@@ -122,6 +122,10 @@ public class DieRoller {
 		return rollD100();
 	}
 	
+	public static int rollAny(int dieSize) {
+		return rollDie(dieSize);
+	}
+	
 	// Roll a result from 1-n
 	private static int rollDie(int dieSize) {
 		return (int)(Math.random() * dieSize + 1);

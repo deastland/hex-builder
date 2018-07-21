@@ -28,6 +28,7 @@ public enum TerrainType {
 	BADLAND(75),
 	DESERT(50),
 	JUNGLE(25),
+	VOLCANIC(25),			// Assumes enough safe surface to navigate past lava/steam vents/boiling pools/etc.
 	HIGHWAY(100);
 	
 	private int speedModifier;

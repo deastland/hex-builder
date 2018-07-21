@@ -19,7 +19,8 @@ public class Hex {
 	private Coordinates location = new Coordinates();	// The Cartesian coordinates of the hex (X,Y).
 	private TerrainType terrainType = null;				// The dominant terrain type in this hex.
 	private boolean polite = false;						// A polite hex is a hex within distance 2 of a civilization hex (town, city, etc.).
-	List<Feature> features = new ArrayList<Feature>();	// A list of things in this hex. Some might be obvious (automatically seen).
+	List<EncounterLocation> features = 
+			new ArrayList<EncounterLocation>();			// A list of things in this hex. Some might be obvious (automatically seen).
 	
 	////// CONSTRUCTORS ////////
 	public Hex() {
@@ -51,7 +52,7 @@ public class Hex {
 	}
 
 	public boolean hasObviousFeature() {
-		for (Feature f : this.features) {
+		for (EncounterLocation f : this.features) {
 			if (f.isObvious()) {
 				return true;
 			}
@@ -93,11 +94,11 @@ public class Hex {
 		this.terrainType = terrainType;
 	}
 
-	public List<Feature> getFeatures() {
+	public List<EncounterLocation> getFeatures() {
 		return features;
 	}
 
-	public void setFeatures(List<Feature> features) {
+	public void setFeatures(List<EncounterLocation> features) {
 		this.features = features;
 	}
 	
@@ -135,7 +136,7 @@ public class Hex {
 		retStr.append("Terrain type: " + terrainType + "\n");
 		retStr.append(("Polite: " + polite));
 		retStr.append("Features: \n");
-		for (Feature f : features) {
+		for (EncounterLocation f : features) {
 			retStr.append(" - " + f.getType() + " : " + f.getName() + " <-- Obvious: " + f.isObvious() + "\n");
 		}
 		
