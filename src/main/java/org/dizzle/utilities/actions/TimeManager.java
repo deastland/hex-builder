@@ -5,7 +5,8 @@ import org.dizzle.utilities.model.Encounter;
 import org.dizzle.utilities.model.EncounterCreature;
 import org.dizzle.utilities.model.Hex;
 import org.dizzle.utilities.model.Party;
-import org.dizzle.utilities.model.SpecialVenue;
+import org.dizzle.utilities.model.Season;
+import org.dizzle.utilities.model.WeatherCondition;
 
 /**
  * This object will calculate what happens during a watch in a hex.
@@ -16,7 +17,7 @@ import org.dizzle.utilities.model.SpecialVenue;
  * @author deastland
  *
  */
-public class WatchManager {
+public class TimeManager {
 	
 	// There are six 4-hour watches in a day. A day starts with sunrise, rather than on a clock.
 	// A typical day.
@@ -28,7 +29,13 @@ public class WatchManager {
 	// Watch 6: Night - Camp/Rest 
 	private int day = 1;
 	private int watch = 1;
+	private Season season = Season.SPRING;
+	private WeatherCondition weather = WeatherCondition.CLEAR;
+	
+	//TODO: Seasons? Summer have 4 day watches. Winter have 4 night watches.
 
+	/////////// Fucntional methods //////////////
+	
 	public Encounter passWatch(Party party) {
 
 		// IF party is moving then...
@@ -44,7 +51,6 @@ public class WatchManager {
 		Encounter watchEncounter = null;
 
 		// Calculate party speed
-		int terrainSpeedModifier = hex.getTerrainType().getSpeedModifier();
 
 		// Roll for an encounter. Take into account the terrain and venue of the party.
 		EncounterGenerator encounterGenerator = new EncounterGenerator();
@@ -55,7 +61,7 @@ public class WatchManager {
 		
 		// Calculate miles traveled.
 		// Start off assuming the party is moving through the base terrain.
-		double speedMultiplier = party.getCurrentHex().getTerrainType().getSpeedModifier() * .01;
+		double speedMultiplier = hex.getTerrainType().getSpeedModifier() * .01;
 		
 		System.out.println("Base speed mod for hex: " + speedMultiplier);
 		
@@ -69,6 +75,9 @@ public class WatchManager {
 			speedMultiplier = party.getSpecialVenue().getSpeedModifier() * .01;
 		}
 		
+		// Weather modifier.
+		speedMultiplier *= weather.getSpeedModifier() * .01;
+		
 		// Figure out distance added to total hex miles traveled and add it to the party.
 		double addedDistance = party.getMilesPerWatch() * speedMultiplier;
 		party.addHexMilesTraveled(addedDistance);
@@ -77,7 +86,12 @@ public class WatchManager {
 		
 		return watchEncounter;
 	}
+	
+	public boolean isDay() {
+		return watch < season.getSunsetWatch();
+	}
 
+	///////////// GETTERS AND SETTERS /////////////////
 	public int getDay() {
 		return day;
 	}
@@ -111,7 +125,7 @@ public class WatchManager {
 	}
 
 	public static void main(String[] args) {
-		WatchManager watchManager = new WatchManager();
+		//TODO: Maybe some testing here?
 		
 	}
 	
@@ -122,6 +136,22 @@ public class WatchManager {
 		retStr.append("WATCH -- Day: ").append(this.day).append(". Watch: ").append(watch).append("\n");
 		
 		return retStr.toString();
+	}
+
+	public Season getSeason() {
+		return season;
+	}
+
+	public void setSeason(Season season) {
+		this.season = season;
+	}
+
+	public WeatherCondition getWeather() {
+		return weather;
+	}
+
+	public void setWeather(WeatherCondition weather) {
+		this.weather = weather;
 	}
 	
 }

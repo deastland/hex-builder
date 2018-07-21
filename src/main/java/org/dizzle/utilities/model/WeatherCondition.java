@@ -1,6 +1,7 @@
 package org.dizzle.utilities.model;
 
 public enum WeatherCondition {
+	CLEAR(100),
 	HOT(75),
 	COLD(75),
 	HURRICANE(10),

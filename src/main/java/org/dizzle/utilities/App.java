@@ -1,6 +1,6 @@
 package org.dizzle.utilities;
 
-import org.dizzle.utilities.actions.WatchManager;
+import org.dizzle.utilities.actions.TimeManager;
 import org.dizzle.utilities.model.EncounterLocation;
 import org.dizzle.utilities.model.FeatureType;
 import org.dizzle.utilities.model.Hex;
@@ -17,7 +17,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        WatchManager watchManager = new WatchManager();
+        TimeManager watchManager = new TimeManager();
         
         ////////////////// CREATE TEST HEX /////////////////////////////////
         

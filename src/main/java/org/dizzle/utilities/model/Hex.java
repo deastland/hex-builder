@@ -131,6 +131,7 @@ public class Hex {
 	public String toString() {
 		StringBuffer retStr = new StringBuffer("");
 		
+		retStr.append(" ------------------- HEX -------------------\n");
 		retStr.append("HexId: " + this.id).append("\n");
 		retStr.append("Coordinates: ").append(location.getX()).append(":").append(location.getY()).append("\n");
 		retStr.append("Terrain type: ").append(terrainType).append("\n");

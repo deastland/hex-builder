@@ -74,6 +74,7 @@ public class EncounterCreature extends Encounter {
 	public String toString() {
 		StringBuffer retStr = new StringBuffer("");
 		
+		retStr.append(" ------------------- CREATURE ENCOUNTER -------------------\n");
 		retStr.append("Monster: ").append(this.name).append("\n");
 		retStr.append("Number Encountered: ").append(this.numberEncountered).append("\n");
 		retStr.append("Actual number: ").append(DieRoller.rollDice(this.numberEncountered)).append("\n");

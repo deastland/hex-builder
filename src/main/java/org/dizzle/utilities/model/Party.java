@@ -169,7 +169,8 @@ public class Party {
 	public String toString() {
 		StringBuffer retStr = new StringBuffer("");
 		
-		retStr.append("PARTY - ").append(name).append("\n");
+		retStr.append(" ------------------- PARTY -------------------\n");
+		retStr.append("Name: ").append(name).append("\n");
 		retStr.append("CurrentHex: ").append(currentHex.getLocation()).append("\n");
 		retStr.append("Travel Mode: ").append(this.travelMode).append("\n");
 		retStr.append("Hex-miles traveled: ").append(hexMilesTraveled).append("\n");
