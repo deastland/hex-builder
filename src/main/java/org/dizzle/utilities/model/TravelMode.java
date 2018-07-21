@@ -11,9 +11,19 @@ package org.dizzle.utilities.model;
  */
 public enum TravelMode {
 
-	SLOW,
-	STANDARD,
-	FAST,
-	SEARCH,
-	STATIONARY;
+	CAREFUL(50),
+	STANDARD(100),
+	FAST(150),
+	EXPLORE(50),
+	STATIONARY(0);
+	
+	int value;
+	
+	public int getValue() {
+		return this.value;
+	}
+	
+	private TravelMode(int value) {
+		this.value = value;
+	}
 }

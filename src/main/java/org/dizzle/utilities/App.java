@@ -1,5 +1,6 @@
 package org.dizzle.utilities;
 
+import org.dizzle.utilities.actions.TimeManager;
 import org.dizzle.utilities.model.Feature;
 import org.dizzle.utilities.model.FeatureType;
 import org.dizzle.utilities.model.Hex;
@@ -14,6 +15,8 @@ public class App
     public static void main( String[] args )
     {
         System.out.println( "Hello World!" );
+        
+        TimeManager timeManager = new TimeManager();
         
         // Create a basic Hex.
         Hex testHex = new Hex(04, 01);

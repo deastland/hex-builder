@@ -10,16 +10,24 @@ import java.util.List;
  */
 public class HexMap {
 
-	private int mapId;
-	private String mapName;
-	private Coordinates startingPoint = new Coordinates(0,0);
+	private int mapId;											// ID number of the map. Helps with database storage.
+	private String mapName;										// Name of this map
+	private Coordinates startingPoint = new Coordinates(0,0);	// The "base" for exploration. (not sure if I need this)
 	
-	private List<Hex> hexes = new ArrayList<Hex>();
+	private List<Hex> hexes = new ArrayList<Hex>();				// This is all the hexes within the map.
 
 	
-	
-	
-	
+	// Given a set of coordinates, return the hex at that location.
+	public Hex getHex(Coordinates c) {
+		
+		for (Hex h : hexes) {
+			if (h.getLocation().equals(c)) {
+				return h;
+			}
+		}
+		
+		return null;
+	}
 	
 	////// Getters & Setters
 	public int getMapId() {
