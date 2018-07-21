@@ -5,6 +5,7 @@ import org.dizzle.utilities.model.Encounter;
 import org.dizzle.utilities.model.EncounterCreature;
 import org.dizzle.utilities.model.Hex;
 import org.dizzle.utilities.model.Party;
+import org.dizzle.utilities.model.SpecialVenue;
 
 /**
  * This object will calculate what happens during a watch in a hex.
@@ -45,60 +46,34 @@ public class WatchManager {
 		// Calculate party speed
 		int terrainSpeedModifier = hex.getTerrainType().getSpeedModifier();
 
-		// Encounter Check. This should, based on the terrain type, roll for encounter chance and then
-		// if there is an encounter, specify the encounter itself.
-		switch(hex.getTerrainType()) {
-		case SWAMP:
-			System.out.println("Do swamp stuff");
-			EncounterGenerator swampEncounter = new EncounterGenerator();
-			watchEncounter = swampEncounter.rollEncounter(party);
-			break;
-		case MOOR:
-			System.out.println("Do moor stuff");
-			break;
-		case FOREST:
-			System.out.println("Do forest stuff");
-			break;
-		case GRASSLAND:
-			System.out.println("Do grasslands stuff");
-			break;
-		case HILL:
-			System.out.println("Do hills stuff");
-			break;
-		case MOUNTAIN:
-			System.out.println("Do mountain stuff");
-			break;
-		case DESERT:
-			System.out.println("Do desert stuff");
-			break;
-		case JUNGLE:
-			System.out.println("Do jungle stuff");
-			break;
-		case BADLAND:
-			System.out.println("Do badland stuff");
-			break;
-		case SEA:
-			System.out.println("Do sea stuff");
-			break;
-		case WATER:
-			System.out.println("Do water stuff");
-			break;
-		case UPSTREAM:
-			System.out.println("Do upstream stuff");
-			break;
-		case DOWNSTREAM:
-			System.out.println("Do downstream stuff");
-			break;
-		case TUNDRA:
-			System.out.println("Do highway stuff");
-			break;
-		case VOLCANIC:
-			break;
-		default:
-			break;
+		// Roll for an encounter. Take into account the terrain and venue of the party.
+		EncounterGenerator encounterGenerator = new EncounterGenerator();
+		watchEncounter = encounterGenerator.rollEncounter(party);
+		
+		// Tick of the watch clock.
+		incrementWatch();
+		
+		// Calculate miles traveled.
+		// Start off assuming the party is moving through the base terrain.
+		double speedMultiplier = party.getCurrentHex().getTerrainType().getSpeedModifier() * .01;
+		
+		System.out.println("Base speed mod for hex: " + speedMultiplier);
+		
+		// Multiply by the type of travel (fast, careful, explore, etc.)
+		speedMultiplier *= party.getTravelMode().getSpeedModifier() * .01;
+		
+		System.out.println("Speed mod after party travel mode: " + speedMultiplier);
+		
+		// If traveling in a special venue, override the speed multiplier.
+		if (party.getSpecialVenue() != null) {
+			speedMultiplier = party.getSpecialVenue().getSpeedModifier() * .01;
 		}
 		
-		incrementWatch();
+		// Figure out distance added to total hex miles traveled and add it to the party.
+		double addedDistance = party.getMilesPerWatch() * speedMultiplier;
+		party.addHexMilesTraveled(addedDistance);
+		
+		//TODO: Eventually we will roll for at what point in a watch the encounter happened and pro-rate the distance. Maybe.
 		
 		return watchEncounter;
 	}

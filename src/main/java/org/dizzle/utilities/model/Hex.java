@@ -85,7 +85,7 @@ public class Hex {
 		this.location.setY(yCoord);;
 	}
 
-	// Getters and setters
+	/////////////// GETTERS AND SETTERS /////////////////
 	public TerrainType getTerrainType() {
 		return terrainType;
 	}
@@ -138,7 +138,7 @@ public class Hex {
 		retStr.append("Features: \n");
 		for (EncounterLocation f : features) {
 			retStr.append(" - ").append(f.getType()).append(" : ").append(f.getName())
-			.append(" <-- Obvious: ").append(f.isObvious()).append("\n");
+			.append("| Obvious: ").append(f.isObvious()).append(" | SpecialVenue: ").append(f.getSpecialVenue()).append("\n");
 		}
 		
 		return retStr.toString();

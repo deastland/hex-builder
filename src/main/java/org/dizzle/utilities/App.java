@@ -17,8 +17,6 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
-        
         WatchManager watchManager = new WatchManager();
         
         ////////////////// CREATE TEST HEX /////////////////////////////////
@@ -61,7 +59,7 @@ public class App
         
         // Check for adjacency.
         if (testHex.isAdjacentTo(otherHex)) {
-        	System.out.println("The hexes are adjacent!");
+        	System.out.println("The hexes are adjacent!\n");
         }
         
         ////////////////////// CREATE TEST PARTY ////////////////////////////////
@@ -70,12 +68,15 @@ public class App
         party.setBaseSpeed(30);
         party.setCurrentHex(testHex);
         party.setName("Hex Hellions");
-        party.setTravelMode(TravelMode.CAREFUL_EXPLORE);
+        party.setTravelMode(TravelMode.STANDARD);
         
+        System.out.println("Party starting point: " + party);
         /////////////// HAVE THE PARTY EXPEND A WATCH AND CHECK FOR ENCOUNTERS /////////////////
         
         System.out.println("About to try to have an encounter...");
         
         System.out.println("Encounter is: " + watchManager.passWatch(party));
+        
+        System.out.println("Party end point: " + party);
     }
 }

@@ -108,7 +108,7 @@ public class EncounterGenerator {
 			break;
 		case DESERT:
 			break;
-		case DOWNSTREAM:
+		case RIVER:
 			break;
 		case FOREST:
 			break;
@@ -129,8 +129,6 @@ public class EncounterGenerator {
 			encounterTable = SwampEncounterTable.getEncounterTable();
 			break;
 		case TUNDRA:
-			break;
-		case UPSTREAM:
 			break;
 		case VOLCANIC:
 			break;

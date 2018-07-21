@@ -61,6 +61,10 @@ public class Party {
 		return this.baseSpeed * 0.4;
 	}
 	
+	public void addHexMilesTraveled(double addedMiles) {
+		this.hexMilesTraveled += addedMiles;
+	}
+	
 	////////// CONSTRUCTORS /////////////////
 	
 	public Party() {};
@@ -159,6 +163,18 @@ public class Party {
 		
 		System.out.println("Party base speed: " + party.getBaseSpeed());
 		System.out.println(("Party map speed per watch: " + party.getMilesPerWatch()));
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer retStr = new StringBuffer("");
+		
+		retStr.append("PARTY - ").append(name).append("\n");
+		retStr.append("CurrentHex: ").append(currentHex.getLocation()).append("\n");
+		retStr.append("Travel Mode: ").append(this.travelMode).append("\n");
+		retStr.append("Hex-miles traveled: ").append(hexMilesTraveled).append("\n");
+		
+		return retStr.toString();
 	}
 
 }

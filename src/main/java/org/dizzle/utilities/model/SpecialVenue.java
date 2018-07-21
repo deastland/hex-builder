@@ -4,7 +4,8 @@ public enum SpecialVenue {
 
 	HIGHWAY(100),
 	TRAIL(75),
-	RIVER(100),
+	RIVER_UPSTREAM(75),
+	RIVER_DOWNSTREAM(125),
 	AIR(100);
 	
 	private int speedModifier;

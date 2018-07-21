@@ -23,8 +23,7 @@ public enum TerrainType {
 	MOOR(25),				// Includes any terrain type covered in water/mud that must be walked through.
 	WATER(100),				// Assumes water craft or swim speed
 	SEA(100),				// Assumes water craft or swim speed
-	UPSTREAM(50),			// Assumes water craft or swim speed
-	DOWNSTREAM(150),		// Assumes water craft or swim speed
+	RIVER(100),				// Assumes water craft or swim speed
 	BADLAND(75),
 	DESERT(50),
 	JUNGLE(25),
