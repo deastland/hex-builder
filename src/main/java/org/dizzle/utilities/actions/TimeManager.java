@@ -31,14 +31,18 @@ public class TimeManager {
 	// Watch 4: Night - Set Camp/Rest
 	// Watch 5: Night - Camp/Rest
 	// Watch 6: Night - Camp/Rest 
-	private int year = 1;
-	private Month month = Month.Hjarnfrang;
-	private int campaignDay = 1;
-	private int watch = 1;
-	private Season season = Season.SPRING;
-	private WeatherCondition weatherCondition = WeatherCondition.CLEAR;
-	private GroundCondition groundCondition = GroundCondition.CLEAR;
-	private VisibilityCondition visibilityCondition = VisibilityCondition.CLEAR;
+	private int year = 1;															// Year
+	private Month month = Month.Hjarnfrang;											// Month of the year
+	private int dayOfMonth = 1;														// Day of the month (1st, 14th, 30th, etc.)
+	private int campaignDay = 1;													// Days into the campaign, in total.
+	private int watch = 1;															// The current watch (six watches a day)
+	private Season season = Season.SPRING;											// The current season
+	private WeatherCondition weatherCondition = WeatherCondition.CLEAR;				// What is the weather like, in general?
+	private GroundCondition groundCondition = GroundCondition.CLEAR;				// Is the ground covered in snow? Muddy?
+	private VisibilityCondition visibilityCondition = VisibilityCondition.CLEAR;	// How easily can a person see
+	
+	
+	
 	private int weatherModifier = 0;	// This can increase if the chance for bad weather increases. Goes back to zero when CLEAR/WARM/COOL.
 	
 	
@@ -122,12 +126,31 @@ public class TimeManager {
 
 	public void incrementWatch() {
 		this.watch++;
+		// End of day? Go to the next day.
 		if (this.watch > 6) {
-			this.campaignDay++;
+			incrementCampaignDay();
 			this.watch = 1;
 		}
 	}
 	
+	public void incrementCampaignDay() {
+		this.campaignDay++;
+		this.dayOfMonth++;
+		// End of month? Go to the next month.
+		if (this.dayOfMonth > 30) {
+			int monthCounter = month.getMonthNumber();
+			// End of year? Go to the next year.
+			if (monthCounter < 12) {
+				monthCounter++;
+			} else {
+				monthCounter = 1;
+				this.year++;
+			}
+			
+			this.month = Month.getMonthFromNumber(monthCounter);
+			this.dayOfMonth = 1;
+		}
+	}
 	/**
 	 * Calculate the kind of weather currently taking place.
 	 * 
@@ -257,6 +280,30 @@ public class TimeManager {
 
 	public void setYear(int year) {
 		this.year = year;
+	}
+
+	public Month getMonth() {
+		return month;
+	}
+
+	public void setMonth(Month month) {
+		this.month = month;
+	}
+
+	public int getDayOfMonth() {
+		return dayOfMonth;
+	}
+
+	public void setDayOfMonth(int dayOfMonth) {
+		this.dayOfMonth = dayOfMonth;
+	}
+
+	public int getCampaignDay() {
+		return campaignDay;
+	}
+
+	public void setCampaignDay(int campaignDay) {
+		this.campaignDay = campaignDay;
 	}
 
 	public static void main(String[] args) {

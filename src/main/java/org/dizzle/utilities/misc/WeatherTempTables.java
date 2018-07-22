@@ -4,10 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.dizzle.utilities.model.TempRange;
+import org.dizzle.utilities.model.TempSpanChart;
 
 public class WeatherTempTables {
 	
 	public static final Map<String, TempRange> tempTable = new HashMap<String, TempRange>();
+	public static final TempSpanChart[] desertTemps = new TempSpanChart[12];
 	
 	public WeatherTempTables() {
 		init();
