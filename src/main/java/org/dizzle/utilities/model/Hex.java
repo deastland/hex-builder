@@ -17,7 +17,7 @@ public class Hex {
 
 	private int id;										// Unique ID of hex. For database storage.
 	private Coordinates location = new Coordinates();	// The Cartesian coordinates of the hex (X,Y).
-	private TerrainType terrainType = null;				// The dominant terrain type in this hex.
+	private TravelTerrainType terrainType = null;				// The dominant terrain type in this hex.
 	private boolean polite = false;						// A polite hex is a hex within distance 2 of a civilization hex (town, city, etc.).
 	List<EncounterLocation> features = 
 			new ArrayList<EncounterLocation>();			// A list of things in this hex. Some might be obvious (automatically seen).
@@ -31,7 +31,7 @@ public class Hex {
 		this.location.setY(y);
 	}
 	
-	public Hex(int x, int y, TerrainType type) {
+	public Hex(int x, int y, TravelTerrainType type) {
 		this.location.setX(x);
 		this.location.setY(y);
 		this.terrainType = type;
@@ -41,7 +41,7 @@ public class Hex {
 		this(loc, null);
 	}
 	
-	public Hex(Coordinates loc, TerrainType type) {
+	public Hex(Coordinates loc, TravelTerrainType type) {
 		this.location = loc;
 		this.terrainType = type;
 	}
@@ -86,11 +86,11 @@ public class Hex {
 	}
 
 	/////////////// GETTERS AND SETTERS /////////////////
-	public TerrainType getTerrainType() {
+	public TravelTerrainType getTerrainType() {
 		return terrainType;
 	}
 
-	public void setTerrainType(TerrainType terrainType) {
+	public void setTerrainType(TravelTerrainType terrainType) {
 		this.terrainType = terrainType;
 	}
 

@@ -7,7 +7,7 @@ import org.dizzle.utilities.model.EncounterCreature;
 import org.dizzle.utilities.model.EncounterLocation;
 import org.dizzle.utilities.model.Party;
 import org.dizzle.utilities.model.SpecialVenue;
-import org.dizzle.utilities.model.TerrainType;
+import org.dizzle.utilities.model.TravelTerrainType;
 import org.dizzle.utilities.model.TravelMode;
 
 public class EncounterGenerator {
@@ -113,7 +113,7 @@ public class EncounterGenerator {
 		return returnLocation;
 	}
 	
-	private EncounterCreature rollCreatureEncountered(TerrainType terrainType) {
+	private EncounterCreature rollCreatureEncountered(TravelTerrainType terrainType) {
 		EncounterCreature returnEncounter = null;
 
 		switch(terrainType) {

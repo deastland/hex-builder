@@ -12,7 +12,7 @@ package org.dizzle.utilities.model;
  * @author Zeus
  *
  */
-public enum TerrainType {
+public enum TravelTerrainType {
 
 	// All terrain types assume "trackless" areas of the terrain. If traveling along a road, use HIGHWAY special venue.
 	FOREST(50),
@@ -36,7 +36,7 @@ public enum TerrainType {
 		return this.speedModifier;
 	}
 	
-	private TerrainType(int speedModifier) {
+	private TravelTerrainType(int speedModifier) {
 		this.speedModifier = speedModifier;
 	}
 	

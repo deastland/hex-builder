@@ -8,7 +8,7 @@ import org.dizzle.utilities.model.Hex;
 import org.dizzle.utilities.model.Party;
 import org.dizzle.utilities.model.Season;
 import org.dizzle.utilities.model.SpecialVenue;
-import org.dizzle.utilities.model.TerrainType;
+import org.dizzle.utilities.model.TravelTerrainType;
 import org.dizzle.utilities.model.TravelMode;
 import org.dizzle.utilities.model.VisibilityCondition;
 import org.dizzle.utilities.model.WeatherCondition;
@@ -37,7 +37,7 @@ public class App
         
         // Create a basic Hex.
         Hex testHex = new Hex(04, 01);
-        testHex.setTerrainType(TerrainType.SWAMP);
+        testHex.setTerrainType(TravelTerrainType.SWAMP);
         // Add a feature to the Hex.
         EncounterLocation feature = new EncounterLocation();
         feature.setName("Impact Crater");

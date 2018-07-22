@@ -5,6 +5,7 @@ import org.dizzle.utilities.misc.EncounterGenerator;
 import org.dizzle.utilities.model.Encounter;
 import org.dizzle.utilities.model.GroundCondition;
 import org.dizzle.utilities.model.Hex;
+import org.dizzle.utilities.model.Month;
 import org.dizzle.utilities.model.Party;
 import org.dizzle.utilities.model.Season;
 import org.dizzle.utilities.model.TravelMode;
@@ -30,7 +31,9 @@ public class TimeManager {
 	// Watch 4: Night - Set Camp/Rest
 	// Watch 5: Night - Camp/Rest
 	// Watch 6: Night - Camp/Rest 
-	private int day = 1;
+	private int year = 1;
+	private Month month = Month.Hjarnfrang;
+	private int campaignDay = 1;
 	private int watch = 1;
 	private Season season = Season.SPRING;
 	private WeatherCondition weatherCondition = WeatherCondition.CLEAR;
@@ -120,7 +123,7 @@ public class TimeManager {
 	public void incrementWatch() {
 		this.watch++;
 		if (this.watch > 6) {
-			this.day++;
+			this.campaignDay++;
 			this.watch = 1;
 		}
 	}
@@ -199,13 +202,6 @@ public class TimeManager {
 	}
 	
 	///////////// GETTERS AND SETTERS /////////////////
-	public int getDay() {
-		return day;
-	}
-
-	public void setDay(int day) {
-		this.day = day;
-	}
 
 	public int getWatch() {
 		return watch;
@@ -223,24 +219,6 @@ public class TimeManager {
 		this.season = season;
 	}
 	
-	public static void main(String[] args) {
-		//TODO: Maybe some testing here?
-		
-	}
-	
-	@Override
-	public String toString() {
-		StringBuffer retStr = new StringBuffer();
-		
-		retStr.append(" ------------------- TIME MANAGER -------------------\n");
-		retStr.append("WATCH -- Day: ").append(this.day).append(". Watch: ").append(watch).append("\n");
-		retStr.append("Weather: ").append(this.weatherCondition).append("\n");
-		retStr.append("Visibilty: ").append(this.visibilityCondition).append("\n");
-		retStr.append("Ground: ").append(this.groundCondition).append("\n");
-		
-		return retStr.toString();
-	}
-
 	public int getWeatherModifier() {
 		return weatherModifier;
 	}
@@ -271,6 +249,36 @@ public class TimeManager {
 
 	public void setWeatherCondition(WeatherCondition weatherCondition) {
 		this.weatherCondition = weatherCondition;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	public static void main(String[] args) {
+		//TODO: Maybe some testing here?
+		
+		Month myMonth = Month.getMonthFromNumber(3);
+		
+		System.out.println("Month: " + myMonth);
+		
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer retStr = new StringBuffer();
+		
+		retStr.append(" ------------------- TIME MANAGER -------------------\n");
+		retStr.append("WATCH -- Day: ").append(this.campaignDay).append(". Watch: ").append(watch).append("\n");
+		retStr.append("Weather: ").append(this.weatherCondition).append("\n");
+		retStr.append("Visibilty: ").append(this.visibilityCondition).append("\n");
+		retStr.append("Ground: ").append(this.groundCondition).append("\n");
+		
+		return retStr.toString();
 	}
 
 }
