@@ -61,7 +61,6 @@ public class EncounterLocation extends Encounter {
 	@Override
 	public String toString() {
 		StringBuffer retStr = new StringBuffer("");
-		
 		retStr.append(" ------------------- LOCATION ENCOUNTER -------------------\n");
 		retStr.append("Location Name: " + getName()).append("\n");
 		retStr.append("Location Type: " + getType()).append("\n");

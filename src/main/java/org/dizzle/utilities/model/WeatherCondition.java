@@ -9,7 +9,8 @@ public enum WeatherCondition {
 	STORM(75),
 	HEAVY_STORM(50),
 	HURRICANE(10),
-	OBSCURED(50);		// fog, night, etc.
+	BLIZZARD(10),
+	FOG(50);
 	
 	private int speedModifier;
 	

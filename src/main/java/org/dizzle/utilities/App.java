@@ -2,12 +2,16 @@ package org.dizzle.utilities;
 
 import org.dizzle.utilities.actions.TimeManager;
 import org.dizzle.utilities.model.EncounterLocation;
+import org.dizzle.utilities.model.GroundCondition;
 import org.dizzle.utilities.model.LocationType;
 import org.dizzle.utilities.model.Hex;
 import org.dizzle.utilities.model.Party;
+import org.dizzle.utilities.model.Season;
 import org.dizzle.utilities.model.SpecialVenue;
 import org.dizzle.utilities.model.TerrainType;
 import org.dizzle.utilities.model.TravelMode;
+import org.dizzle.utilities.model.VisibilityCondition;
+import org.dizzle.utilities.model.WeatherCondition;
 
 /**
  * Hello world!
@@ -17,9 +21,17 @@ public class App
 {
     public static void main( String[] args )
     {
+    	//////////////////// TIME MANAGER TEST ////////////////////////////
+    	
     	// This is the calendar, the watch tracker, the encounter generator, 
     	// the weather maker, and the travel tracker for the hex map.
-        TimeManager watchManager = new TimeManager();
+        TimeManager timeManager = new TimeManager();
+        timeManager.setSeason(Season.SPRING);
+        timeManager.setVisibilityCondition(VisibilityCondition.CLEAR);
+        timeManager.setWeatherCondition(WeatherCondition.CLEAR);
+        timeManager.setGroundCondition(GroundCondition.CLEAR);
+        
+        System.out.println(timeManager);
         
         ////////////////// CREATE TEST HEX /////////////////////////////////
         
@@ -72,13 +84,13 @@ public class App
         party.setName("Hex Hellions");
         party.setTravelMode(TravelMode.STANDARD);
         
-        System.out.println("Party starting point: " + party);
+        System.out.println("Party start point:\n" + party);
         /////////////// HAVE THE PARTY EXPEND A WATCH AND CHECK FOR ENCOUNTERS /////////////////
         
         System.out.println("About to try to have an encounter...");
         
-        System.out.println("Encounter is: " + watchManager.passWatch(party));
+        System.out.println("Encounter is: \n" + timeManager.passWatch(party));
         
-        System.out.println("Party end point: " + party);
+        System.out.println("Party end point: \n" + party);
     }
 }

@@ -8,6 +8,9 @@ public class EncounterCreature extends Encounter {
 	private int percentLair;
 	private int percentTracks;	// This could be traces of any kind. See MelancholiesAndMirth for (spoor/tracks/traces)
 	
+	private boolean evidence = false;	// Set to true if we have spoor, tracks, or traces rather than the creature itself.
+	private boolean lair = false;		// Set to true if the lair is encountered.
+	
 	private String spoor;
 	private String tracks;
 	private String traces1;
@@ -79,9 +82,27 @@ public class EncounterCreature extends Encounter {
 		retStr.append("Number Encountered: ").append(this.numberEncountered).append("\n");
 		retStr.append("Actual number: ").append(DieRoller.rollDice(this.numberEncountered)).append("\n");
 		retStr.append("Chance of lair: ").append(this.percentLair).append("\n");
+		retStr.append("Lair? ").append(this.lair).append("\n");
 		retStr.append("Chance of tracks: ").append(this.percentTracks).append("\n");
+		retStr.append("Tracks? ").append(this.evidence).append("\n");
 		
 		return retStr.toString();
+	}
+
+	public boolean isEvidence() {
+		return evidence;
+	}
+
+	public void setEvidence(boolean evidence) {
+		this.evidence = evidence;
+	}
+
+	public boolean isLair() {
+		return lair;
+	}
+
+	public void setLair(boolean lair) {
+		this.lair = lair;
 	}
 
 }

@@ -76,7 +76,20 @@ public class EncounterGenerator {
 		}
 		
 		// Roll on the appropriate table and return the creature encountered.
-		return rollCreatureEncountered(party.getCurrentHex().getTerrainType());
+		EncounterCreature theEncounter = rollCreatureEncountered(party.getCurrentHex().getTerrainType());
+
+		// If the party is moving, check to see if they discover a lair or tracks.
+		if (party.getTravelMode() != TravelMode.STATIONARY) {
+			// Tracks?
+			if (DieRoller.rollPercentile() <= theEncounter.getPercentTracks()) {
+				theEncounter.setEvidence(true);
+			// Lair?
+			} else if (DieRoller.rollPercentile() <= theEncounter.getPercentLair()) {
+				theEncounter.setLair(true);
+			}
+		}
+		
+		return theEncounter;
 	}
 
 	public int getLocationChance() {
@@ -143,7 +156,6 @@ public class EncounterGenerator {
 		// Roll on the table, using the size of the table for the 'die' size.
 		int dieRoll = DieRoller.rollAny(encounterTable.length) - 1;	// The -1 is because the array is 0 based but die always go from 1-n.
 		returnEncounter = encounterTable[dieRoll];
-
 
 		return returnEncounter;
 	}

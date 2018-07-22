@@ -19,5 +19,4 @@ public class Encounter {
 		this.name = name;
 	}
 	
-	
 }

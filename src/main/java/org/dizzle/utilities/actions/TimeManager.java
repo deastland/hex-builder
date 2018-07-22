@@ -42,6 +42,17 @@ public class TimeManager {
 	/////////// Functional methods //////////////
 	
 	public Encounter passWatch(Party party) {
+		
+		/*
+		 * 1) Roll for encounter.
+		 * 2) Increment the watch (4 hours)
+		 * 3) Calculate movement
+		 *   - Adjust for visibility
+		 *   - Adjust for weather
+		 *   - Adjust for terrain
+		 *   
+		 * 4) Add miles to party move.
+		 */
 
 		// IF party is moving then...
 		// 1) Calculate party move speed.
@@ -55,7 +66,6 @@ public class TimeManager {
 		Hex hex = party.getCurrentHex();
 		Encounter watchEncounter = null;
 
-		// Calculate party speed
 
 		// Roll for an encounter. Take into account the terrain and venue of the party.
 		EncounterGenerator encounterGenerator = new EncounterGenerator();
@@ -124,7 +134,7 @@ public class TimeManager {
 	public WeatherCondition getCurrentWeather(int inclimentModifier) {
 		WeatherCondition weatherCondition = null;
 
-		// Base chance of weather turning worse is 10%.
+		// Base chance of weather turning worse is 10%. If you miss the roll, weather gets better.
 		double inclimentChance = 10 + inclimentModifier;
 		
 		switch(season) {
@@ -147,7 +157,34 @@ public class TimeManager {
 			
 			// Weather gets worse if roll below.
 			if (DieRoller.rollPercentile() <= inclimentChance) {
+				// Chance to transition to COLD, STORM, HEAVY STORM, BLIZZARD
+				switch(weatherCondition) {
+				case BLIZZARD:
+					break;
+				case CLEAR:
+					break;
+				case COLD:
+					weatherCondition = WeatherCondition.STORM;
+					inclimentChance += 10;
+					break;
+				case COOL:
+					weatherCondition = WeatherCondition.COLD;
+					inclimentChance += 10;
+					break;
+				case HEAVY_STORM:
+					weatherCondition = WeatherCondition.BLIZZARD;
+					break;
+				case FOG:
+					break;
+				case STORM:
+					weatherCondition = WeatherCondition.HEAVY_STORM;
+					break;
+				case WARM:
+					break;
+				default:
+					break;
 				
+				}
 			}
 			
 			// Calculate chance that any incliment weather is happening.
@@ -195,7 +232,11 @@ public class TimeManager {
 	public String toString() {
 		StringBuffer retStr = new StringBuffer();
 		
+		retStr.append(" ------------------- TIME MANAGER -------------------\n");
 		retStr.append("WATCH -- Day: ").append(this.day).append(". Watch: ").append(watch).append("\n");
+		retStr.append("Weather: ").append(this.weatherCondition).append("\n");
+		retStr.append("Visibilty: ").append(this.visibilityCondition).append("\n");
+		retStr.append("Ground: ").append(this.groundCondition).append("\n");
 		
 		return retStr.toString();
 	}
@@ -222,6 +263,14 @@ public class TimeManager {
 
 	public void setVisibilityCondition(VisibilityCondition visibilityCondition) {
 		this.visibilityCondition = visibilityCondition;
+	}
+
+	public WeatherCondition getWeatherCondition() {
+		return weatherCondition;
+	}
+
+	public void setWeatherCondition(WeatherCondition weatherCondition) {
+		this.weatherCondition = weatherCondition;
 	}
 
 }
