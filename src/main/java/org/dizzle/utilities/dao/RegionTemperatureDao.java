@@ -12,6 +12,13 @@ import org.dizzle.utilities.model.TempRange;
 import org.dizzle.utilities.model.TempSpanChart;
 import org.dizzle.utilities.model.WeatherTerrainType;
 
+/**
+ * Given a particular region (temperate, arctic, etc.) and a terrain type (forest, desert,etc.) and the date - return the low/mid/high ranges.
+ * 
+ * 
+ * @author Zeus
+ *
+ */
 public class RegionTemperatureDao {
 
 	public TempSpanChart getTempSpanChart(ClimaticRegion climaticRegion, WeatherTerrainType weatherTerrainType, Month month) {
@@ -66,6 +73,7 @@ public class RegionTemperatureDao {
 		
 		return returnObject;
 	}
+
 	
 	// Test the database temp puller.
 	public static void main(String[] args) {
@@ -74,5 +82,8 @@ public class RegionTemperatureDao {
 		TempSpanChart chart = dao.getTempSpanChart(ClimaticRegion.TEMPERATE, WeatherTerrainType.FOREST, Month.Lewfrang);
 		
 		System.out.println(chart);
+		
+		System.out.println("Today's Temp: ");
+		
 	}
 }

@@ -321,6 +321,7 @@ public class TimeManager {
 		
 		retStr.append(" ------------------- TIME MANAGER -------------------\n");
 		retStr.append("WATCH -- Day: ").append(this.campaignDay).append(". Watch: ").append(watch).append("\n");
+		retStr.append("Calendar -- Month: ").append(this.getMonth()).append(" -- Calendar Day: ").append(this.dayOfMonth).append("\n");
 		retStr.append("Weather: ").append(this.weatherCondition).append("\n");
 		retStr.append("Visibilty: ").append(this.visibilityCondition).append("\n");
 		retStr.append("Ground: ").append(this.groundCondition).append("\n");
