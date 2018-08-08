@@ -1,6 +1,7 @@
 package org.dizzle.utilities;
 
 import org.dizzle.utilities.actions.TimeManager;
+import org.dizzle.utilities.model.ClimaticRegion;
 import org.dizzle.utilities.model.EncounterLocation;
 import org.dizzle.utilities.model.GroundCondition;
 import org.dizzle.utilities.model.LocationType;
@@ -12,6 +13,7 @@ import org.dizzle.utilities.model.TravelTerrainType;
 import org.dizzle.utilities.model.TravelMode;
 import org.dizzle.utilities.model.VisibilityCondition;
 import org.dizzle.utilities.model.WeatherCondition;
+import org.dizzle.utilities.model.WeatherTerrainType;
 
 /**
  * Hello world!
@@ -37,7 +39,9 @@ public class App
         
         // Create a basic Hex.
         Hex testHex = new Hex(04, 01);
+        testHex.setClimaticRegion(ClimaticRegion.TEMPERATE);
         testHex.setTerrainType(TravelTerrainType.SWAMP);
+        testHex.setWeatherTerrainType(WeatherTerrainType.PLAINS);
         // Add a feature to the Hex.
         EncounterLocation feature = new EncounterLocation();
         feature.setName("Impact Crater");

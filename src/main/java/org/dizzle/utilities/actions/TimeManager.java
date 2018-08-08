@@ -2,6 +2,8 @@ package org.dizzle.utilities.actions;
 
 import org.dizzle.utilities.misc.DieRoller;
 import org.dizzle.utilities.misc.EncounterGenerator;
+import org.dizzle.utilities.misc.WeatherGenerator;
+import org.dizzle.utilities.model.ClimaticRegion;
 import org.dizzle.utilities.model.Encounter;
 import org.dizzle.utilities.model.GroundCondition;
 import org.dizzle.utilities.model.Hex;
@@ -37,14 +39,21 @@ public class TimeManager {
 	private int campaignDay = 1;													// Days into the campaign, in total.
 	private int watch = 1;															// The current watch (six watches a day)
 	private Season season = Season.SPRING;											// The current season
+	private WeatherGenerator weatherGenerator = new WeatherGenerator();
+
+	
 	private WeatherCondition weatherCondition = WeatherCondition.CLEAR;				// What is the weather like, in general?
 	private GroundCondition groundCondition = GroundCondition.CLEAR;				// Is the ground covered in snow? Muddy?
 	private VisibilityCondition visibilityCondition = VisibilityCondition.CLEAR;	// How easily can a person see
 	
 	
 	
+	
 	private int weatherModifier = 0;	// This can increase if the chance for bad weather increases. Goes back to zero when CLEAR/WARM/COOL.
 	
+	/////////// CONSTRUCTORS ///////////////////
+	
+	public TimeManager() {}
 	
 	/////////// Functional methods //////////////
 	
@@ -73,13 +82,12 @@ public class TimeManager {
 		Hex hex = party.getCurrentHex();
 		Encounter watchEncounter = null;
 
-
 		// Roll for an encounter. Take into account the terrain and venue of the party.
 		EncounterGenerator encounterGenerator = new EncounterGenerator();
 		watchEncounter = encounterGenerator.rollEncounter(party);
 		
 		// Tick of the watch clock.
-		incrementWatch();
+		incrementWatch(party);
 		
 		// Calculate miles traveled.
 		// Start off assuming the party is moving through the base terrain.
@@ -124,16 +132,16 @@ public class TimeManager {
 		return watch < season.getSunsetWatch();
 	}
 
-	public void incrementWatch() {
+	public void incrementWatch(Party party) {
 		this.watch++;
-		// End of day? Go to the next day.
+		// End of day? Go to the next day. Get weather for new day.
 		if (this.watch > 6) {
-			incrementCampaignDay();
+			incrementCampaignDay(party.getCurrentHex());
 			this.watch = 1;
 		}
 	}
 	
-	public void incrementCampaignDay() {
+	public void incrementCampaignDay(Hex hex) {
 		this.campaignDay++;
 		this.dayOfMonth++;
 		// End of month? Go to the next month.
@@ -149,6 +157,8 @@ public class TimeManager {
 			
 			this.month = Month.getMonthFromNumber(monthCounter);
 			this.dayOfMonth = 1;
+			this.weatherGenerator.newWeatherDay(hex.getClimaticRegion(), hex.getWeatherTerrainType(), month);
+
 		}
 	}
 	/**
@@ -325,6 +335,7 @@ public class TimeManager {
 		retStr.append("Weather: ").append(this.weatherCondition).append("\n");
 		retStr.append("Visibilty: ").append(this.visibilityCondition).append("\n");
 		retStr.append("Ground: ").append(this.groundCondition).append("\n");
+		retStr.append(this.weatherGenerator);
 		
 		return retStr.toString();
 	}

@@ -1,39 +1,79 @@
 package org.dizzle.utilities.misc;
 
+import org.dizzle.utilities.dao.RegionPrecipitationDao;
 import org.dizzle.utilities.dao.RegionTemperatureDao;
 import org.dizzle.utilities.model.ClimaticRegion;
 import org.dizzle.utilities.model.Month;
+import org.dizzle.utilities.model.PrecipSpanChart;
+import org.dizzle.utilities.model.PrecipitationAmount;
+import org.dizzle.utilities.model.PrecipitationType;
 import org.dizzle.utilities.model.TempRange;
 import org.dizzle.utilities.model.TempSpanChart;
 import org.dizzle.utilities.model.WeatherTerrainType;
 
 public class WeatherGenerator {
+	
+	// Temperature
+	private TempRange[] possibleTempSpans = new TempRange[3];			// Element 0..1..2 is low..med..high temp spans
+	private int currentTempRange = 2;									// The current temp span in effect.
+	
+	// Precipitation
+	private PrecipSpanChart precipSpanChart = new PrecipSpanChart();	// The low/mid/high precipitation amount
+	private boolean chancePrecipitation = false;						// Is precipitation possible today?
+	private PrecipitationAmount precipAmount = PrecipitationAmount.NONE;// The current precipitation amount
+	private PrecipitationType precipType = PrecipitationType.RAIN;		// Is it rain, sleet, or snow.
 
-	// INFO ABOUT WHERE WE ARE
-	
-	
-	
-	// Internal values
-	private TempRange[] possibleTempSpans = new TempRange[3];
-	private int currentTempRange = 2;
-	private boolean chancePrecipitation = false;
-	private int streakCounter = 0;
-	private boolean inStreak = false;
+	// Wind
 	private int windSpeed = 0;
 	
-	public void nextWeatherDay(ClimaticRegion climaticRegion, WeatherTerrainType weatherTerrainType, Month month) {
+	// Track weather streaks/waves
+	private int streakCounter = 0;
+	private boolean inStreak = false;
+	
+	//////////////// CONSTRUCTORS ///////////////////
+	
+	public WeatherGenerator() {	
+		this(ClimaticRegion.TEMPERATE, WeatherTerrainType.PLAINS, Month.Hjarnsprig);
+	}
+	
+	public WeatherGenerator(ClimaticRegion region, WeatherTerrainType terrainType, Month month) {
+		this.newWeatherDay(region, terrainType, month);
+	}
+	
+	/////////////// FUNCTIONALITY ////////////////////
+	
+	/**
+	 * Calculate a new day of weather, given the conditions.
+	 * 
+	 * @param climaticRegion - The climatic region (arctic, temperate, etc.)
+	 * @param weatherTerrainType - The terrain type (plains, forest, mountains, etc.)
+	 * @param month - The month of the year.
+	 */
+	public void newWeatherDay(ClimaticRegion climaticRegion, WeatherTerrainType weatherTerrainType, Month month) {
 		// Get the chart of possible temps.
 		pullTempSpanChart(climaticRegion, weatherTerrainType, month);
 		
+		// Get the chart of possible precipitation amounts.
+		pullPrecipSpanChart(climaticRegion, weatherTerrainType, month);
+		
 		// Using the current temp possibilities, calculate temp, wind, and precipitation.
-		calculateTempRange(climaticRegion);
+		calculateTodaysWeather(climaticRegion);
 	}
 	
+	private void pullPrecipSpanChart(ClimaticRegion climaticRegion, WeatherTerrainType weatherTerrainType, Month month) {
+		
+		RegionPrecipitationDao dao = new RegionPrecipitationDao();
+		
+		this.precipSpanChart = dao.getPercipitationSpanChart(climaticRegion, weatherTerrainType, month);
+		
+	}
+
 	/**
-	 * Uses the day-to-day change logic (Wilderness Survival Guide p. 109) to get the days temp range.
-	 * @param tempSpanChart - A chart containing the high/mid/low temp spans for this time of year.
+	 * Uses the day-to-day change logic (Wilderness Survival Guide p. 109) to get the days temp/wind/precip.
+	 * 
+	 * @param climaticRegion - The climatic region (arctic, tropical, temperate, etc.)
 	 */
-	private void calculateTempRange(ClimaticRegion climaticRegion) {
+	private void calculateTodaysWeather(ClimaticRegion climaticRegion) {
 		
 		int dieRoll1 = DieRoller.rollD6();
 		int dieRoll2 = DieRoller.rollD6();
@@ -136,6 +176,32 @@ public class WeatherGenerator {
 		// If we have 2 consecutive days at min/max, we are in a streak.
 		this.inStreak = streakCounter > 1;
 		
+		// Check for precipitation amount, if there is any at all.
+		if (this.chancePrecipitation) {
+			
+			// Die rolls above determine precip amount.
+			if (dieRoll1 > dieRoll2) {
+				this.precipAmount = this.precipSpanChart.getLowPrecip();
+			} else if (dieRoll2 > dieRoll1) {
+				this.precipAmount = this.precipSpanChart.getMidPrecip();
+			} else {
+				this.precipAmount = this.precipSpanChart.getHighPrecip();
+			}
+
+			// Precip type depends on temp.
+			this.precipType = PrecipitationType.RAIN;
+			if (this.possibleTempSpans[this.currentTempRange].getHigh() < 40) {
+				this.precipType = PrecipitationType.SLEET;
+			}
+			if (this.possibleTempSpans[this.currentTempRange].getHigh() < 32) {
+				this.precipType = PrecipitationType.SNOW;
+			}
+		} else {
+			this.precipAmount = PrecipitationAmount.NONE;
+			this.precipType = PrecipitationType.NONE;
+		}
+		
+		
 	}
 	
 	/**
@@ -173,6 +239,18 @@ public class WeatherGenerator {
 		
 	}
 	
+	public static void main(String[] args) {
+		WeatherGenerator gen = new WeatherGenerator(ClimaticRegion.TEMPERATE, WeatherTerrainType.PLAINS, Month.Hjarnfrang);
+		
+		int numDays = 10;
+		
+		for (int i=0; i <= numDays; i++) {
+			gen.newWeatherDay(ClimaticRegion.TEMPERATE, WeatherTerrainType.PLAINS, Month.Hjarnfrang);
+			System.out.println("Day " + i + ": " + gen);
+			
+		}
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder retStr = new StringBuilder("");
@@ -180,7 +258,34 @@ public class WeatherGenerator {
 		retStr.append(" --------------------------------- WEATHER MANAGER -------------------------------------\n");
 		retStr.append("Today's TempSpan: ").append(this.possibleTempSpans[this.currentTempRange].toString()).append("\n");
 		retStr.append("Today's Windspeed: ").append(this.windSpeed).append("\n");
+		retStr.append("Perciptitation? ").append(this.chancePrecipitation).append("\n");
+		retStr.append("Precip Amount: ").append(this.precipAmount).append(" of ").append(this.precipType).append("\n");
 		
 		return retStr.toString();
 	}
+
+	public PrecipSpanChart getPrecipSpanChart() {
+		return precipSpanChart;
+	}
+
+	public void setPrecipSpanChart(PrecipSpanChart precipSpanChart) {
+		this.precipSpanChart = precipSpanChart;
+	}
+
+	public PrecipitationAmount getPrecipAmount() {
+		return precipAmount;
+	}
+
+	public void setPrecipAmount(PrecipitationAmount precipAmount) {
+		this.precipAmount = precipAmount;
+	}
+
+	public PrecipitationType getPrecipType() {
+		return precipType;
+	}
+
+	public void setPrecipType(PrecipitationType precipType) {
+		this.precipType = precipType;
+	}
+
 }

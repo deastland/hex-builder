@@ -17,7 +17,11 @@ public class Hex {
 
 	private int id;										// Unique ID of hex. For database storage.
 	private Coordinates location = new Coordinates();	// The Cartesian coordinates of the hex (X,Y).
-	private TravelTerrainType terrainType = null;				// The dominant terrain type in this hex.
+	private TravelTerrainType terrainType = null;		// The dominant terrain type in this hex.
+	private ClimaticRegion climaticRegion = 
+			ClimaticRegion.TEMPERATE;					// The climatic region (arctic, tropical, etc.) the hex is in.
+	private WeatherTerrainType weatherTerrainType = 
+			WeatherTerrainType.PLAINS;					// The terrain type for weather.
 	private boolean polite = false;						// A polite hex is a hex within distance 2 of a civilization hex (town, city, etc.).
 	List<EncounterLocation> features = 
 			new ArrayList<EncounterLocation>();			// A list of things in this hex. Some might be obvious (automatically seen).
@@ -37,6 +41,14 @@ public class Hex {
 		this.terrainType = type;
 	}
 	
+	public Hex(int x, int y, TravelTerrainType terrainType, ClimaticRegion climaticRegion, WeatherTerrainType weatherType) {
+		this.location.setX(x);
+		this.location.setY(y);
+		this.terrainType = terrainType;
+		this.climaticRegion = climaticRegion;
+		this.weatherTerrainType = weatherType;
+	}
+	
 	public Hex(Coordinates loc) {
 		this(loc, null);
 	}
@@ -44,6 +56,13 @@ public class Hex {
 	public Hex(Coordinates loc, TravelTerrainType type) {
 		this.location = loc;
 		this.terrainType = type;
+	}
+	
+	public Hex(Coordinates loc, TravelTerrainType terrainType, ClimaticRegion climate, WeatherTerrainType weatherType) {
+		this.location = loc;
+		this.terrainType = terrainType;
+		this.climaticRegion = climate;
+		this.weatherTerrainType = weatherType;
 	}
 	
 	// Functional methods
@@ -143,6 +162,22 @@ public class Hex {
 		}
 		
 		return retStr.toString();
+	}
+
+	public WeatherTerrainType getWeatherTerrainType() {
+		return weatherTerrainType;
+	}
+
+	public void setWeatherTerrainType(WeatherTerrainType weatherTerrainType) {
+		this.weatherTerrainType = weatherTerrainType;
+	}
+
+	public ClimaticRegion getClimaticRegion() {
+		return climaticRegion;
+	}
+
+	public void setClimaticRegion(ClimaticRegion climaticRegion) {
+		this.climaticRegion = climaticRegion;
 	}
 	
 
