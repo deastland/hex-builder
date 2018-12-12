@@ -19,7 +19,7 @@ import org.dizzle.utilities.model.WeatherTerrainType;
  * @author Zeus
  *
  */
-public class RegionTemperatureDao {
+public class RegionTempDaoDb implements RegionTempDao {
 
 	public TempSpanChart getTempSpanChart(ClimaticRegion climaticRegion, WeatherTerrainType weatherTerrainType, Month month) {
 		TempSpanChart returnObject = null;
@@ -77,7 +77,7 @@ public class RegionTemperatureDao {
 	
 	// Test the database temp puller.
 	public static void main(String[] args) {
-		RegionTemperatureDao dao = new RegionTemperatureDao();
+		RegionTempDaoDb dao = new RegionTempDaoDb();
 		
 		TempSpanChart chart = dao.getTempSpanChart(ClimaticRegion.TEMPERATE, WeatherTerrainType.FOREST, Month.Lewfrang);
 		

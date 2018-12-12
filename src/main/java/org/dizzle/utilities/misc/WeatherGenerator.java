@@ -1,7 +1,7 @@
 package org.dizzle.utilities.misc;
 
 import org.dizzle.utilities.dao.RegionPrecipitationDao;
-import org.dizzle.utilities.dao.RegionTemperatureDao;
+import org.dizzle.utilities.dao.RegionTempDaoDb;
 import org.dizzle.utilities.model.ClimaticRegion;
 import org.dizzle.utilities.model.Month;
 import org.dizzle.utilities.model.PrecipSpanChart;
@@ -213,7 +213,7 @@ public class WeatherGenerator {
 	 */
 	private void pullTempSpanChart(ClimaticRegion climaticRegion, WeatherTerrainType weatherTerrainType, Month month) {
 
-		RegionTemperatureDao tempDao = new RegionTemperatureDao();
+		RegionTempDaoDb tempDao = new RegionTempDaoDb();
 		
 		TempSpanChart todaysChart = tempDao.getTempSpanChart(climaticRegion, weatherTerrainType, month);
 		
