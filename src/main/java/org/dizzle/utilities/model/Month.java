@@ -2,6 +2,12 @@ package org.dizzle.utilities.model;
 
 public enum Month {
 
+	/*
+	 * The month names are compound words that combine 
+	 * a name for the season (frang, sprig, varn, staag)
+	 * with a name for high/mid/low (lew, whel, hjarn).
+	 * 
+	 */	
 	Lewfrang(1, Season.WINTER),
 	Whelfrang(2, Season.WINTER),
 	Hjarnfrang(3, Season.WINTER),

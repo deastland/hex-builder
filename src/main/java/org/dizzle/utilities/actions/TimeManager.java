@@ -39,7 +39,7 @@ public class TimeManager {
 	private int campaignDay = 1;													// Days into the campaign, in total.
 	private int watch = 1;															// The current watch (six watches a day)
 	private Season season = Season.SPRING;											// The current season
-	private WeatherGenerator weatherGenerator = new WeatherGenerator();
+//	private WeatherGenerator weatherGenerator = new WeatherGenerator();
 
 	
 	private WeatherCondition weatherCondition = WeatherCondition.CLEAR;				// What is the weather like, in general?
@@ -157,7 +157,7 @@ public class TimeManager {
 			
 			this.month = Month.getMonthFromNumber(monthCounter);
 			this.dayOfMonth = 1;
-			this.weatherGenerator.newWeatherDay(hex.getClimaticRegion(), hex.getWeatherTerrainType(), month);
+//			this.weatherGenerator.newWeatherDay(hex.getClimaticRegion(), hex.getWeatherTerrainType(), month);
 
 		}
 	}
@@ -335,7 +335,7 @@ public class TimeManager {
 		retStr.append("Weather: ").append(this.weatherCondition).append("\n");
 		retStr.append("Visibilty: ").append(this.visibilityCondition).append("\n");
 		retStr.append("Ground: ").append(this.groundCondition).append("\n");
-		retStr.append(this.weatherGenerator);
+//		retStr.append(this.weatherGenerator);
 		
 		return retStr.toString();
 	}
